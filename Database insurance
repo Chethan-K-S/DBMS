@@ -1,0 +1,65 @@
+show databases;
+create database chethan074;
+use chethan074;
+create table PERSON(
+driver_id varchar(100),
+name varchar(100),
+address varchar(100),
+primary key(driver_id));
+
+create table CAR(
+reg_num varchar(100), 
+model varchar(100), 
+year varchar(100),
+primary key (reg_num));
+
+create table OWNS(
+driver_id varchar(100),
+reg_num varchar(100),
+primary key(driver_id,reg_num),
+foreign key(driver_id) references PERSON(driver_id),
+foreign key(reg_num) references CAR(reg_num));
+
+create table ACCIDENT(
+report_num int,
+accident_date varchar(100),
+location varchar(100),
+primary key(report_num));
+
+create table PARTICIPATED(
+driver_id varchar(100),
+reg_num varchar(100),
+report_num int,
+damage_amount int,
+primary key(driver_id,reg_num,report_num),
+foreign key(driver_id) references PERSON(driver_id),
+foreign key(reg_num) references OWNS(reg_num),
+foreign key(report_num) references ACCIDENT(report_num));
+
+desc PARTICIPATED;
+drop  table PARTICIPATED;
+
+insert into PERSON
+values ("A01","Richard","Srinivas Nagar"),("A02","Pradeep","Rajaji Nagar"),("A03","Smith","Ashok Nagar"),("A04","Venu","N R Colony"),("A05","John","Hanumanth Nagar");
+desc PERSON;
+select * from PERSON;
+
+insert into CAR
+values ("KA052250","Indica","1990"),("KA031181","Lancer","1957"),("KA095477","Toyota","1998"),("KA053480","Honda","2008"),("KA041702","Audi","2005");
+
+insert into ACCIDENT
+values (11,"01-JAN-03","Mysore road"),(12,"02-FEB-04","SOUTH END CIRCLE"),(13,"05-JAN-06","Mysore"),(14,"01-MAR-06","Mysore road"),(15,"30-APR-03","KAIWARA");
+
+insert into OWNS
+values("A01","KA052250"),("A02","KA031181"),("A03","KA095477"),("A04","KA053480"),("A05","KA041702");
+
+insert into PARTICIPATED
+values ("A01","KA052250",11,10000),("A02","KA031181",12,50000),("A03","KA095477",13,25000),("A04","KA053480",14,3000),("A05","KA041702",15,5000);
+
+update PARTICIPATED
+set damage_amount=25000 where driver_id="A01";
+
+
+use chethan074;
+insert into ACCIDENT
+values (16,"01-DEC-03","Mysore road");
